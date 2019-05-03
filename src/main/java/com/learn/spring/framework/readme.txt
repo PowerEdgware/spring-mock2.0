@@ -1,0 +1,1 @@
+groovy and java joint compilation
