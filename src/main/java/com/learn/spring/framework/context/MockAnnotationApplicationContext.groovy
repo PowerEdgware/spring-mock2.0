@@ -39,4 +39,8 @@ class MockAnnotationApplicationContext extends MockAbstractApplicationContext{
 			beanFactory.registryBeanDifinition(beanDefinition.factoryBeanName, beanDefinition)
 		})
 	}
+	
+	String getProperty(String key){
+		reader.props.getProperty(key)
+	}
 }

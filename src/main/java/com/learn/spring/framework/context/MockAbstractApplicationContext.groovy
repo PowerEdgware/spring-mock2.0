@@ -67,6 +67,10 @@ abstract class MockAbstractApplicationContext implements MockApplicationContext{
 	Object getBean(String name){
 		getBeanFactory().getBean(name);
 	}
+	
+	String[] getBeanNames(){
+		beanFactory.beanNames
+	}
 
 
 	abstract void loadBeanDefinitions(MockDefaultListableBeanFactory beanFactory)

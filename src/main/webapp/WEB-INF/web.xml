@@ -1,26 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
-  <display-name>spring-mock2.0</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
+  <display-name>springmvc.mock</display-name>
   
   <servlet>
-  	<servlet-name>mockmvc</servlet-name>
-  	<servlet-class>com.learn.mvcframework.servlet.MockDispatcherServlet</servlet-class>
+  	<servlet-name>mockServlet</servlet-name>
+  	<servlet-class>com.learn.spring.framework.webmvc.servlet.MockDispatcherServlet</servlet-class>
   	<init-param>
-  		<param-name>contextLocation</param-name>
+  		<param-name>configLocation</param-name>
   		<param-value>app.properties</param-value>
   	</init-param>
   	<load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>mockmvc</servlet-name>
-  	<url-pattern>/*</url-pattern>
+  	<servlet-name>mockServlet</servlet-name>
+  	<url-pattern>/</url-pattern>
   </servlet-mapping>
 </web-app>

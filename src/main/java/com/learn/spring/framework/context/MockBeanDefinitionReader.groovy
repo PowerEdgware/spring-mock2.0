@@ -22,6 +22,10 @@ class MockBeanDefinitionReader {
 		doScan(props.getProperty(basePackageKey))
 	}
 	
+	String getProperty(String propKey){
+		props.getProperty(propKey)
+	}
+	
 	def doLoadScanPackage(){
 		URL url=MockBeanDefinitionReader.getResource('/'+this.locations[0])
 		new File(url.file).withInputStream{inStream->

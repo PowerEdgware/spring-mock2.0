@@ -22,7 +22,7 @@ class MockDefaultListableBeanFactory implements MockAbstractBeanFactory,MockBean
 		}
 		beanDefinitinMap.putIfAbsent(name, beanDefinition)
 	}
-
+	
 	void preInstantiateSingletons(){
 		//instantiate bean
 		if(beanDefinitinMap.empty){
@@ -33,6 +33,15 @@ class MockDefaultListableBeanFactory implements MockAbstractBeanFactory,MockBean
 				getBean(entry.key)
 			}
 		})
+	}
+	
+	String[] getBeanNames(){
+		Set<String> sets=this.beanDefinitinMap.keySet()
+		String[] names=[sets.size()]
+		sets.eachWithIndex({elem,index-> 
+			names[index]=elem
+		})
+		names
 	}
 
 	Object getBean(Class clazz){
