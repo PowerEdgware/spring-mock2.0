@@ -37,8 +37,9 @@ class MockDefaultListableBeanFactory implements MockAbstractBeanFactory,MockBean
 	
 	String[] getBeanNames(){
 		Set<String> sets=this.beanDefinitinMap.keySet()
-		String[] names=[sets.size()]
+		String[] names=new String[sets.size()]
 		sets.eachWithIndex({elem,index-> 
+			println elem+' '+index
 			names[index]=elem
 		})
 		names
@@ -104,7 +105,7 @@ class MockDefaultListableBeanFactory implements MockAbstractBeanFactory,MockBean
 	private def instantiateBean(String name){
 		MockBeanDefinition mbd=this.beanDefinitinMap.get(name)
 		String className=mbd?.beanClassName
-		if(className?.empty){
+		if(className==null||className?.empty){
 			return null;
 		}
 		Object instance=Class.forName(className).newInstance();

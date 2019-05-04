@@ -22,8 +22,9 @@ class MockAnnotationApplicationContext extends MockAbstractApplicationContext{
 	}
 	
 	def initBeanDefinitionReader(){
-		def reader=new MockBeanDefinitionReader(configLocations)
-		reader
+		println configLocations
+		
+		new MockBeanDefinitionReader(configLocations)
 	}
 	
 	@Override
@@ -40,7 +41,7 @@ class MockAnnotationApplicationContext extends MockAbstractApplicationContext{
 		})
 	}
 	
-	String getProperty(String key){
+	String getProp(String key){
 		reader.props.getProperty(key)
 	}
 }

@@ -50,7 +50,7 @@ class MockDispatcherServlet extends HttpServlet{
 
 	protected void doGet(HttpServletRequest arg0, HttpServletResponse arg1) throws ServletException ,IOException {
 		this.doPost(arg0, arg1)
-	};
+	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -67,6 +67,7 @@ class MockDispatcherServlet extends HttpServlet{
 	private void doDispatch(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		// 获取handler
 		MockHandlerExecutionChain chain = getHandler(req);
+		println chain
 		if (chain == null) {
 			// NOT FOUND
 			processDispatchResult(req,resp,new MockModelAndView("404"));
@@ -76,7 +77,7 @@ class MockDispatcherServlet extends HttpServlet{
 
 		chain.applyPrehandle(req, resp)
 
-		MockModelAndView mv=handlerAdapter.handle(req, resp, handlerAdapter);
+		MockModelAndView mv=handlerAdapter?.handle(req, resp, chain.handler);
 
 		chain.applyPostHandle(req, resp)
 
@@ -84,29 +85,33 @@ class MockDispatcherServlet extends HttpServlet{
 	}
 
 	MockHandlerExecutionChain getHandler(HttpServletRequest req){
-		this.handlerMappings?.each({
-			MockHandlerExecutionChain chain=it.getHanlder(req)!=null
+		for(MockHandlerMapping mapping:handlerMappings){
+			MockHandlerExecutionChain chain=mapping.getHanlder(req)
 			if(log.debugEnabled){
 				log.debug(
-						" handler map [" + it + "] in MockDispatcherServlet with name '" + getServletName() + "'")
+						" handler map [" + mapping + "] in MockDispatcherServlet with name '" + 'mock' + "'")
 			}
 			if(chain!=null){
 				return chain
 			}
-		})
+		}
 		return null
+		//		this.handlerMappings?.find({
+		//		})
 	}
 
 	MockHandlerAdapter getHandlerAdapter(Object handler){
-		this.handlerAdapters?.each({
+		for(MockHandlerAdapter ad:handlerAdapters){
 			if(log.debugEnabled){
-				log.debug("Testing handler adapter [" + it + "]")
+				log.debug("Testing handler adapter [" + ad + "]")
 			}
-			if(it.support(handler)){
-				return it
+			if(ad.support(handler)){
+				return ad
 			}
-		})
+		}
 		return null
+//		this.handlerAdapters?.find({
+//		})
 	}
 
 	private void processDispatchResult(HttpServletRequest request,HttpServletResponse response,
@@ -116,7 +121,7 @@ class MockDispatcherServlet extends HttpServlet{
 		if(this.viewResolvers.isEmpty()){ return;}
 		if (this.viewResolvers != null) {
 			for (MockViewResolver viewResolver : this.viewResolvers) {
-				MockView view = viewResolver.resolveViewName(mv.getViewName(), null);
+				MockView view = viewResolver.resolveViewName(mv.getViewName());
 				if (view != null) {
 					view.render(request,response,mv.model);
 					return;
@@ -155,14 +160,14 @@ class MockDispatcherServlet extends HttpServlet{
 	}
 
 	protected void initViewResolvers(MockAbstractApplicationContext  context){
-		String templateRoot = context.invokeMethod(context,'getProperty', 'templatePath')
-
-		String templateRootPath =MockDispatcherServlet.getResource(templateRoot).file
+		String templateRoot = context.getMetaClass().invokeMethod(context, 'getProp', 'templatePath')
+		println templateRoot
+		String templateRootPath =MockDispatcherServlet.getResource('/'+templateRoot).file
 
 		File templateRootDir = new File(templateRootPath);
 
 		for (File template : templateRootDir.listFiles()) {
-			this.viewResolvers.add(new MockViewResolver(templateRoot));
+			this.viewResolvers.add(new MockViewResolver(templateRootDir));
 		}
 	}
 }

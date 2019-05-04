@@ -10,7 +10,7 @@ class MockView {
 
 	static final String DEFAULT_CONTENT_TYPE = "text/html;charset=utf-8";
 	File viewFile;
-	public GPView(File viewFile){
+	public MockView(File viewFile){
 		this.viewFile = viewFile;
 	}
 	public String getContentType(){
@@ -19,8 +19,8 @@ class MockView {
 
 	void render(HttpServletRequest req,HttpServletResponse resp,Map<String,?> model){
 		StringBuilder buf=new StringBuilder()
-		viewFile.eachLine('utf-8',{line->
-			line = new String(line.getBytes("ISO-8859-1"),"utf-8");
+		viewFile.eachLine('UTF-8',{line->
+			//line = new String(line.getBytes("ISO-8859-1"),"utf-8");
 			Pattern pattern = Pattern.compile("￥\\{[^\\}]+\\}",Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(line);
 
@@ -35,6 +35,8 @@ class MockView {
 			}
 			buf.append(line);
 		})
+		resp.setCharacterEncoding("utf-8")
+		resp.getWriter().println(buf.toString())
 	}
 
 }

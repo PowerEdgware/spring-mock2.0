@@ -15,23 +15,25 @@ class MockBeanDefinitionReader {
 
 	Set<String> beanClasses=new HashSet<>()
 	
-	MockBeanDefinitionReader(String ...locations){
+	MockBeanDefinitionReader(String...locations){
 		this.locations=locations
 		doLoadScanPackage()
 		
 		doScan(props.getProperty(basePackageKey))
 	}
 	
-	String getProperty(String propKey){
+	String getProp(String propKey){
 		props.getProperty(propKey)
 	}
 	
 	def doLoadScanPackage(){
 		URL url=MockBeanDefinitionReader.getResource('/'+this.locations[0])
-		new File(url.file).withInputStream{inStream->
-			props.load(inStream)
-			inStream.close()
-		}
+		println url.file
+//		new File(url.file).withInputStream{inStream->
+//			println inStream
+//			props.load(inStream)
+//		}
+		props.load(url.openStream())
 		this
 	}
 	
@@ -43,7 +45,10 @@ class MockBeanDefinitionReader {
 				doScan(basePackage+'.'+file.name)
 			}else if(file.name.endsWith('.class')){
 				String className=basePackage+'.'+file.name.replace('.class', '')
-				beanClasses.add(className)
+				println className
+				if(!className?.empty){
+					beanClasses.add(className)
+				}
 			}
 		}
 		this
