@@ -16,7 +16,7 @@ class HandleMethod {
 	
 	MethodParameter[] methodParameters;
 
-	public HanderMethod(String url, Method method, Object instance, Pattern pattern) {
+	public HandleMethod(String url, Method method, Object instance, Pattern pattern) {
 		this.url = url;
 		this.method = method;
 		this.instance = instance;
@@ -50,7 +50,7 @@ class HandleMethod {
 
 		public MethodParameter(int i) {
 			this.index = i;
-			this.executable = HanderMethod.this.method;
+			this.executable = HandleMethod.this.method;
 		}
 
 		public Class<?> getParameterType() {

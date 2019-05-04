@@ -17,8 +17,8 @@ class MockViewResolver {
 		if(viewName?.empty){
 			return null
 		}
-		File template=new File(templateRootDir.path+'/'+viewName)
+		File template=new File(templateRootDir.path+'/'+viewName+defaultTemplateSuffix)
 		
-		[template] as MockView
+		new MockView(template)
 	}
 }

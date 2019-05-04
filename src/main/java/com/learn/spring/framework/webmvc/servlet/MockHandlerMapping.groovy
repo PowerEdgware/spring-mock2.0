@@ -7,6 +7,9 @@ trait MockHandlerMapping {
 	MockHandlerExecutionChain getHanlder(HttpServletRequest req){
 		//TODO
 		Object handler=getHandlerInternel(req);
+		if(handler==null){
+			return null;
+		}
 		if(handler instanceof MockHandlerExecutionChain){
 			return handler
 		}
