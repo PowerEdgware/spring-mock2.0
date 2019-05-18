@@ -6,11 +6,12 @@ class LoadClassPathFile {
 		Properties props=new Properties()
 		String location='app.properties'
 		URL url=LoadClassPathFile.getResource('/'+location)
-		new File(url.file).withInputStream{inStream->
+		def rst=new File(url.file).withInputStream{inStream->
 			props.load(inStream)
-			println inStream.dump()
+			//println inStream.dump()
 			inStream.close()
 		}
 		println props
+		println rst
 	}
 }

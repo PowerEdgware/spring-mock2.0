@@ -80,6 +80,7 @@ class MockHanlderMethodMapping implements MockHandlerMapping{
 		String contextPath = req.getContextPath();
 		uri = uri.replace(contextPath, "").replaceAll("/+", "/");
 
+		//urlHandlerMethodMap.each({ })
 		for(String url:urlHandlerMethodMap.keySet()){
 			def hm=urlHandlerMethodMap.get(url);
 			if(hm.pattern.matcher(uri).matches()){
